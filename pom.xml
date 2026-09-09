@@ -2,6 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
@@ -14,31 +15,17 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <allure.version>2.29.1</allure.version>
         <aspectj.version>1.9.24</aspectj.version>
+
+        <java-client.version>10.1.1</java-client.version>
+        <testng.version>7.12.0</testng.version>
+        <commons-io.version>2.22.0</commons-io.version>
+        <json-path.version>3.0.0</json-path.version>
+        <json-simple.version>1.1.1</json-simple.version>
+        <log4j.version>2.24.3</log4j.version>
+        <slf4j.version>1.7.36</slf4j.version>
+        <surefire-plugin.version>3.2.5</surefire-plugin.version>
     </properties>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.2.5</version>
-
-                <configuration>
-                    <argLine>
-                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
-                    </argLine>
-                </configuration>
-
-                <dependencies>
-                    <dependency>
-                        <groupId>org.apache.maven.surefire</groupId>
-                        <artifactId>surefire-testng</artifactId>
-                        <version>3.2.5</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
-        </plugins>
-    </build>
     <!-- Add allure-bom to dependency management to ensure correct versions of all the dependencies are used -->
     <dependencyManagement>
         <dependencies>
@@ -54,25 +41,31 @@
 
     <dependencies>
 
+        <!-- Appium / Testing frameworks -->
+
         <!-- Source: https://mvnrepository.com/artifact/io.appium/java-client -->
         <dependency>
             <groupId>io.appium</groupId>
             <artifactId>java-client</artifactId>
-            <version>10.1.1</version>
+            <version>${java-client.version}</version>
             <scope>compile</scope>
         </dependency>
+
         <!-- Source: https://mvnrepository.com/artifact/org.testng/testng -->
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>7.12.0</version>
+            <version>${testng.version}</version>
             <scope>compile</scope>
         </dependency>
+
+        <!-- Utilities -->
+
         <!-- Source: https://mvnrepository.com/artifact/commons-io/commons-io -->
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>2.22.0</version>
+            <version>${commons-io.version}</version>
             <scope>compile</scope>
         </dependency>
 
@@ -80,35 +73,40 @@
         <dependency>
             <groupId>com.jayway.jsonpath</groupId>
             <artifactId>json-path</artifactId>
-            <version>3.0.0</version>
+            <version>${json-path.version}</version>
             <scope>compile</scope>
         </dependency>
+
         <!-- Source: https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
         <dependency>
             <groupId>com.googlecode.json-simple</groupId>
             <artifactId>json-simple</artifactId>
-            <version>1.1.1</version>
+            <version>${json-simple.version}</version>
             <scope>compile</scope>
         </dependency>
+
+        <!-- Logging -->
 
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-slf4j-impl</artifactId>
-            <version>2.24.3</version>
+            <version>${log4j.version}</version>
         </dependency>
 
         <!-- Log4j Core -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
-            <version>2.24.3</version>
+            <version>${log4j.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.7.36</version>
+            <version>${slf4j.version}</version>
         </dependency>
+
+        <!-- AspectJ / Allure reporting -->
 
         <dependency>
             <groupId>org.aspectj</groupId>
@@ -122,4 +120,29 @@
         </dependency>
 
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${surefire-plugin.version}</version>
+
+                <configuration>
+                    <argLine>
+                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+                    </argLine>
+                </configuration>
+
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.surefire</groupId>
+                        <artifactId>surefire-testng</artifactId>
+                        <version>${surefire-plugin.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>
